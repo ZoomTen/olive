@@ -466,7 +466,7 @@ void OliveGlobal::open_action_search() {
 }
 
 void OliveGlobal::set_batch_export() {
-  batch_export = true;  
+  batch_export = true;
 }
 
 bool OliveGlobal::get_batch_export() {
@@ -474,7 +474,7 @@ bool OliveGlobal::get_batch_export() {
 }
 
 void OliveGlobal::set_export_start(long int n) {
-  export_start = n;  
+  export_start = n;
 }
 
 long int OliveGlobal::get_export_start() {
@@ -482,7 +482,7 @@ long int OliveGlobal::get_export_start() {
 }
 
 void OliveGlobal::set_export_end(long int n) {
-  export_end = n;  
+  export_end = n;
 }
 
 long int OliveGlobal::get_export_end() {
@@ -490,9 +490,30 @@ long int OliveGlobal::get_export_end() {
 }
 
 void OliveGlobal::set_export_name(QString name) {
-  export_name = name;  
+  export_name = name;
 }
 
 QString OliveGlobal::get_export_name() {
   return export_name;
+}
+
+void OliveGlobal::set_export_format(QString format) {
+  if (!format.compare("avi", Qt::CaseInsensitive)){
+    export_format = BATCH_AVI;
+  } else if (!format.compare("mp4", Qt::CaseInsensitive)) {
+    export_format = BATCH_MPEG4;
+  } else if (!format.compare("png", Qt::CaseInsensitive)) {
+    export_format = BATCH_IMG_PNG;
+  } else if (!format.compare("tif", Qt::CaseInsensitive)) {
+    export_format = BATCH_IMG_TIFF;
+  } else if (!format.compare("mp3", Qt::CaseInsensitive)) {
+    export_format = BATCH_MP3;
+  } else {
+    printf("[ERROR] Export formats currently available: avi, mp4, png, tiff, mp3\n");
+    exit(1);
+  }
+}
+
+long int OliveGlobal::get_export_format() {
+  return export_format;
 }

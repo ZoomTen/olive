@@ -166,6 +166,11 @@ private:
   QVector<QString> format_strings;
 
   /**
+   * @brief BatchFormats -> ExportFormats conversion table
+   */
+  QVector<int> batch_formats;
+
+  /**
    * @brief Pointer to an ExportThread
    *
    * Set when exporting starts, and deleted by export_thread_finished() when the thread is complete.

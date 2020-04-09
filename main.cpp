@@ -57,6 +57,7 @@ int main(int argc, char *argv[]) {
                  "\t-h, --help\t\tShow this help\n"
                  "\t-f, --fullscreen\tStart in full screen mode\n"
                  "\t-e, --export [filename]\t\tStart the program for batch export\n"
+                 "\t--export-format [format]\t\tFormat to use for batch export\n"
                  "\t--export-start\t\tStarting frame for batch export\n"
                  "\t--export-end\t\tEnding frame for batch export\n"
                  "\t--disable-shaders\tDisable OpenGL shaders (for debugging)\n"
@@ -80,6 +81,15 @@ int main(int argc, char *argv[]) {
             i++;
           }
           olive::Global->set_batch_export();
+        } else if (!strcmp(argv[i], "--export-format")) {
+          if (i + 1 < argc && argv[i + 1][0] != '-') {
+            olive::Global->set_export_format(argv[i + 1]);
+            i++;
+            olive::Global->set_batch_export();
+          } else {
+            printf("[ERROR] No format specified\n");
+            return 1;
+          }
         } else if (!strcmp(argv[i], "--export-start")) {
           if (i + 1 < argc && argv[i + 1][0] != '-') {
             olive::Global->set_export_start(std::stoi(argv[i + 1]));

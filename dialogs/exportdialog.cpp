@@ -78,10 +78,22 @@ ExportDialog::ExportDialog(QWidget *parent) :
   format_strings[FORMAT_WEBM] = "WebM";
   format_strings[FORMAT_WMV] = "Windows Media";
 
+  batch_formats.resize(BATCH_FORMATS_SIZE);
+  batch_formats[BATCH_AVI] = FORMAT_AVI;
+  batch_formats[BATCH_MPEG4] = FORMAT_MPEG4;
+  batch_formats[BATCH_IMG_PNG] = FORMAT_IMG;
+  batch_formats[BATCH_IMG_TIFF] = FORMAT_IMG;
+  batch_formats[BATCH_MP3] = FORMAT_MP3;
+
   for (int i=0;i<FORMAT_SIZE;i++) {
     formatCombobox->addItem(format_strings[i]);
   }
-  formatCombobox->setCurrentIndex(FORMAT_MPEG4);
+
+  if(olive::Global->get_batch_export()){
+    formatCombobox->setCurrentIndex(batch_formats[olive::Global->get_export_format()]);
+  } else {
+    formatCombobox->setCurrentIndex(FORMAT_MPEG4);
+  }
 
   // default to sequence's native dimensions
   widthSpinbox->setValue(olive::ActiveSequence->width);
@@ -96,9 +108,10 @@ ExportDialog::ExportDialog(QWidget *parent) :
   if(olive::Global->get_batch_export()){
     QString export_name;
     if((export_name = olive::Global->get_export_name()) != ""){
-      export_name += ".mp4";
+      //export_name += ".mp4";
     }else{
-      export_name = olive::ActiveProjectFilename + ".mp4";
+      //export_name = olive::ActiveProjectFilename + ".mp4";
+      export_name = olive::ActiveProjectFilename;
     }
     this->StartExport(export_name);
   }
@@ -186,6 +199,20 @@ void ExportDialog::format_changed(int index) {
     add_codec_to_combobox(vcodecCombobox, AV_CODEC_ID_TIFF);
 
     default_vcodec = 4;
+
+    if(olive::Global->get_batch_export()){
+      switch(olive::Global->get_export_format()){
+        case BATCH_IMG_TIFF:
+          default_vcodec = 5;
+          break;
+        case BATCH_IMG_PNG:
+        default:
+          default_vcodec = 4;
+          break;
+      }
+    } else {
+      default_vcodec = 4;
+    }
     break;
   case FORMAT_MP2:
     add_codec_to_combobox(acodecCombobox, AV_CODEC_ID_MP2);
@@ -563,10 +590,10 @@ void ExportDialog::StartExport(QString filename) {
       long int s=olive::Global->get_export_start();
       long int e=olive::Global->get_export_end();
       if(s != -1){
-        params.start_frame = s;        
+        params.start_frame = s;
       }
       if(e != -1){
-        params.end_frame = e;        
+        params.end_frame = e;
       }
     }
 
