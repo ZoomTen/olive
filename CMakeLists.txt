@@ -435,7 +435,7 @@ qt5_add_translation(OLIVE_QM_FILES
   ts/olive_zh-TW.ts
 )
 
-set(OLIVE_TARGET "olive-editor")
+set(OLIVE_TARGET "olive-editor-multiexport")
 if(APPLE)
   set(OLIVE_TARGET "Olive")
 endif()
