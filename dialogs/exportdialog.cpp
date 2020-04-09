@@ -43,31 +43,6 @@ extern "C" {
 #include "rendering/exportthread.h"
 #include "ui/mainwindow.h"
 
-enum ExportFormats {
-  FORMAT_3GPP,
-  FORMAT_AIFF,
-  FORMAT_APNG,
-  FORMAT_AVI,
-  FORMAT_DNXHD,
-  FORMAT_AC3,
-  FORMAT_FLV,
-  FORMAT_GIF,
-  FORMAT_IMG,
-  FORMAT_MP2,
-  FORMAT_MP3,
-  FORMAT_MPEG1,
-  FORMAT_MPEG2,
-  FORMAT_MPEG4,
-  FORMAT_MPEGTS,
-  FORMAT_MKV,
-  FORMAT_OGG,
-  FORMAT_MOV,
-  FORMAT_WAV,
-  FORMAT_WEBM,
-  FORMAT_WMV,
-  FORMAT_SIZE
-};
-
 ExportDialog::ExportDialog(QWidget *parent) :
   QDialog(parent)
 {
